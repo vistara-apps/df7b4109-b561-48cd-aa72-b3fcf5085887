@@ -1,0 +1,30 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "Совет Дня (Sovet Dnya)",
+    "subtitle": "Built with Zara",
+    "description": "Совет Дня (Sovet Dnya) is a Base Mini App built with Zara.",
+    "iconUrl": "https://0co.to/images/zara-2.png",
+    "homeUrl": "https://df7b4109b56148cdaa72b3fcf5085887-kyie.vercel.app",
+    "splashImageUrl": "https://df7b4109b56148cdaa72b3fcf5085887-kyie.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "heroImageUrl": "https://df7b4109b56148cdaa72b3fcf5085887-kyie.vercel.app/image.png",
+    "tagline": "Совет Дня (Sovet Dnya)",
+    "screenshotUrls": [
+      "https://df7b4109b56148cdaa72b3fcf5085887-kyie.vercel.app/screenshot.png",
+      "https://df7b4109b56148cdaa72b3fcf5085887-kyie.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "social",
+    "tags": [
+      "base",
+      "miniapp",
+      "onchainkit"
+    ],
+    "webhookUrl": "https://df7b4109b56148cdaa72b3fcf5085887-kyie.vercel.app/api/webhook"
+  }
+}

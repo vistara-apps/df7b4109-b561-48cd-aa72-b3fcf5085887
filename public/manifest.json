@@ -1,0 +1,14 @@
+{
+  "name": "Совет Дня (Sovet Dnya)",
+  "description": "Совет Дня (Sovet Dnya) is a Base Mini App built with Zara.",
+  "image": "https://dummyimage.com/1200x628/0a0b0d/ffffff.png&text=OG",
+  "external_url": "https://df7b4109-b561-48cd-aa72-b3fcf5085887.vercel.app",
+  "properties": {
+    "app": {
+      "name": "Совет Дня (Sovet Dnya)",
+      "description": "Совет Дня (Sovet Dnya) is a Base Mini App built with Zara.",
+      "url": "https://df7b4109-b561-48cd-aa72-b3fcf5085887.vercel.app",
+      "icon": "https://0co.to/images/zara-2.png"
+    }
+  }
+}
