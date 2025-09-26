@@ -64,8 +64,79 @@ export async function generatePersonalizedTip(goal: string, niche: string, exper
   content: string;
   actionItems: string[];
 }> {
-  // In a real app, this would call OpenAI API
-  // For demo purposes, we'll use sample tips
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+
+  if (!openaiApiKey) {
+    // Fallback to sample tips if no API key
+    return getSampleTip(goal, niche, experience);
+  }
+
+  try {
+    const prompt = `Generate a personalized daily tip for someone who wants to achieve: "${goal}".
+
+Context:
+- Niche: ${niche}
+- Experience level: ${experience}
+- This should be actionable wisdom they can implement today
+
+Please provide:
+1. A concise, motivating tip (2-3 sentences)
+2. 2-3 specific, actionable steps they can take today
+
+Format your response as JSON:
+{
+  "content": "The main tip content here",
+  "actionItems": ["Action 1", "Action 2", "Action 3"]
+}
+
+Make it personalized to their goal and experience level. Focus on practical, immediate actions.`;
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${openaiApiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a wise mentor providing personalized daily advice. Always respond with valid JSON containing "content" and "actionItems" fields.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        max_tokens: 500,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const result = JSON.parse(data.choices[0].message.content.trim());
+
+    return {
+      content: result.content,
+      actionItems: result.actionItems
+    };
+  } catch (error) {
+    console.error('Error generating tip with OpenAI:', error);
+    // Fallback to sample tips
+    return getSampleTip(goal, niche, experience);
+  }
+}
+
+function getSampleTip(goal: string, niche: string, experience: string): {
+  content: string;
+  actionItems: string[];
+} {
+  // Fallback sample tips
   const sampleTips = {
     'crypto-dev': {
       beginner: {
@@ -117,12 +188,12 @@ export async function generatePersonalizedTip(goal: string, niche: string, exper
 
   const nicheKey = niche as keyof typeof sampleTips;
   const experienceKey = experience as keyof typeof sampleTips[typeof nicheKey];
-  
+
   if (sampleTips[nicheKey] && sampleTips[nicheKey][experienceKey]) {
     return sampleTips[nicheKey][experienceKey];
   }
 
-  // Fallback generic tip
+  // Generic fallback
   return {
     content: `Focus on taking one small step towards your goal: "${goal}". Consistency beats perfection every time.`,
     actionItems: [
